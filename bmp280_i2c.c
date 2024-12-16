@@ -345,9 +345,12 @@ double temperature(int x) {
 	}
 }
 
+double pressure() {
 
 
-trim_read() {
+
+	double var1 = 0;
+	double var2 = 0;
 	unsigned short dig_P1 = 0;
 	short dig_P2 = 0;
 	short dig_P3 = 0;
@@ -357,71 +360,77 @@ trim_read() {
 	short dig_P7 = 0;
 	short dig_P8 = 0;
 	short dig_P9 = 0;
-	unsigned short calib_T1 = 0;
-	signed short calib_T2 = 0;
-	signed short calib_T3 = 0;
-	
+	uint32_t t_fine = 0;
+	signed long raw_pressure = 0;
+	double p = 0;
 
-	//calibT1 lsb r/w
-	calib_T1 = bmp_i2c_read(0x88);
-	//calibT1 msb r/w
-	calib_T1 |= (bmp_i2c_read(0x89) << 8);
+//   temp = temperature(0);
+	t_fine = temperature(1);
 
-	//printf("calib t1: %hu\n", calib_T1);
+//	dig_P1 lsb r/w
+	dig_P1 = bmp_i2c_read(0x8E);
+//dig_p1 msb r/w
+	dig_P1 |= (bmp_i2c_read(0x8F) << 8);
 
-	//calibT2 lsb r/w
-	calib_T2 = bmp_i2c_read(0x8A);
-	//calibT2 msb r/w
-	calib_T2 |= (bmp_i2c_read(0x8B) << 8);
+	//dig_P2 lsb r/w
+	dig_P2 = bmp_i2c_read(0x90);
+	//dig_P2 msb r/w
+	dig_P2 |= (bmp_i2c_read(0x91) << 8);
 
-	//printf("calib t2: %hd\n", calib_T2);
+	// dig_P3 (0x92 / 0x93)
+	dig_P3 = bmp_i2c_read(0x92);
+	dig_P3 |= (bmp_i2c_read(0x93) << 8);
 
-	//calibT3 lsb r/w
-	calib_T3 = bmp_i2c_read(0x8C);
-	//calibT3 msb r/w
-	calib_T3 |= (bmp_i2c_read(0x8D) << 8);
-	
-	//	dig_P1 lsb r/w
-		dig_P1 = bmp_i2c_read(0x8E);
-	//dig_p1 msb r/w
-		dig_P1 |= (bmp_i2c_read(0x8F) << 8);
+	// dig_P4 (0x94 / 0x95)
+	dig_P4 = bmp_i2c_read(0x94);
+	dig_P4 |= (bmp_i2c_read(0x95) << 8);
 
-		//dig_P2 lsb r/w
-		dig_P2 = bmp_i2c_read(0x90);
-		//dig_P2 msb r/w
-		dig_P2 |= (bmp_i2c_read(0x91) << 8);
+	// dig_P5 (0x96 / 0x97)
+	dig_P5 = bmp_i2c_read(0x96);
+	dig_P5 |= (bmp_i2c_read(0x97) << 8);
 
-		// dig_P3 (0x92 / 0x93)
-		dig_P3 = bmp_i2c_read(0x92);
-		dig_P3 |= (bmp_i2c_read(0x93) << 8);
+	// dig_P6 (0x98 / 0x99)
+	dig_P6 = bmp_i2c_read(0x98);
+	dig_P6 |= (bmp_i2c_read(0x99) << 8);
 
-		// dig_P4 (0x94 / 0x95)
-		dig_P4 = bmp_i2c_read(0x94);
-		dig_P4 |= (bmp_i2c_read(0x95) << 8);
+	// dig_P7 (0x9A / 0x9B)
+	dig_P7 = bmp_i2c_read(0x9A);
+	dig_P7 |= (bmp_i2c_read(0x9B) << 8);
 
-		// dig_P5 (0x96 / 0x97)
-		dig_P5 = bmp_i2c_read(0x96);
-		dig_P5 |= (bmp_i2c_read(0x97) << 8);
+	// dig_P8 (0x9C / 0x9D)
+	dig_P8 = bmp_i2c_read(0x9C);
+	dig_P8 |= (bmp_i2c_read(0x9D) << 8);
 
-		// dig_P6 (0x98 / 0x99)
-		dig_P6 = bmp_i2c_read(0x98);
-		dig_P6 |= (bmp_i2c_read(0x99) << 8);
+	// dig_P9 (0x9E / 0x9F)
+	dig_P9 = bmp_i2c_read(0x9E);
+	dig_P9 |= (bmp_i2c_read(0x9F) << 8);
 
-		// dig_P7 (0x9A / 0x9B)
-		dig_P7 = bmp_i2c_read(0x9A);
-		dig_P7 |= (bmp_i2c_read(0x9B) << 8);
+	raw_pressure = bmp_i2c_read(0xF7) << 12;   // msb
+	raw_pressure |= bmp_i2c_read(0xF8) << 4;   // lsb
+	raw_pressure |= bmp_i2c_read(0xF9) >> 4;   // xlsb
 
-		// dig_P8 (0x9C / 0x9D)
-		dig_P8 = bmp_i2c_read(0x9C);
-		dig_P8 |= (bmp_i2c_read(0x9D) << 8);
+	var1 = ((double) t_fine / 2.0) - 64000.0;
+	var2 = var1 * var1 * ((double) dig_P6) / 32768.0;
+	var2 = var2 * var1 * ((double) dig_P5) * 2.0;
+	var2 = (var2 / 4.0) + (((double) dig_P4) * 65536.0);
+	var1 = (((double) dig_P3) * var1 * var1 / 524288.0
+			+ ((double) dig_P2) * var1) / 524288.0;
+	var1 = (1.0 + var1 / 32768.0) * ((double) dig_P1);
+	p = 1048576.0 - (double) raw_pressure;
+	p = (p - (var2 / 4096.0)) * 6250.0 / var1;
+	var1 = ((double) dig_P9) * p * p / 2147483648.0;
+	var2 = p * ((double) dig_P8) / 32768.0;
+	p = p + (var1 + var2 + ((double) dig_P7)) / 16.0;
 
-		// dig_P9 (0x9E / 0x9F)
-		dig_P9 = bmp_i2c_read(0x9E);
-		dig_P9 |= (bmp_i2c_read(0x9F) << 8);
+	//printf("final pressure : %f Pa\n",p);
 
-	
+	return p;
 
 }
+
+
+
+
 
 double altitude() {
 
