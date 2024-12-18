@@ -347,8 +347,6 @@ double temperature(int x) {
 
 double pressure() {
 
-
-
 	double var1 = 0;
 	double var2 = 0;
 	unsigned short dig_P1 = 0;
@@ -428,9 +426,16 @@ double pressure() {
 
 }
 
+void bmp_i2c_setup() {
+	usart_gpio_init();
+	usart_init();
+	bmp_rcc_config();
+	bmp_gpio_config();
+	bmp_i2c_config();
 
-
-
+	bmp_i2c_write(0xF5, 0x00);
+	bmp_i2c_write(0xF4, 0xFF);
+}
 
 double altitude() {
 
