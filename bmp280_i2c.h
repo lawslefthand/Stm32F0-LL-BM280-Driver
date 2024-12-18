@@ -17,6 +17,8 @@ double temperature(int x);
 double pressure(void);
 double altitude(void);
 void delay_1s(void);
+void trim_read(void);
+void bmp_i2c_setup(void);
 
 
 #endif /* SRC_BMP280_I2C_H_ */
