@@ -35,7 +35,7 @@ This is a dual-mode driver for the BMP280 sensor, supporting both I2C and SPI co
 | CS         | PA4 (SPI1 NSS) | Chip Select |
 
 ## Known Bugs
-- **I2C Communication Issue**: For certain defective HW-611 BMP280 boards, the sensor may not work under certain I2C configurations due to hardware limitations. To overcome this, you need to use Adafruit's I2C driver first in the Arduino IDE and then apply this driver. This workaround resolves issues with the defective boards and ensures proper operation.
+- **I2C Communication Issue**: For certain defective HW-611 BMP280 boards, the sensor may not update temperature and pressure under certain I2C configurations due to hardware limitations. To overcome this, you need to use Adafruit's I2C driver first in the Arduino IDE and then apply this driver in Stm32 Cube IDE. This workaround resolves issues with the defective boards and ensures proper operation.
 
 ## Dependencies
 - STM32CubeIDE or any other compatible IDE for STM32 development
