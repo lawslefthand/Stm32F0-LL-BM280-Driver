@@ -1,4 +1,4 @@
-# BMP280 Dual Mode Driver (I2C/SPI) for STM32 Nucleo F0
+# BMP280 Dual Mode Driver (I2C/SPI) for STM32 Nucleo F0 Boards
 
 This is a dual-mode driver for the BMP280 sensor, supporting both I2C and SPI communication interfaces. Written using the ARM-CMSIS standard, the driver provides complete Low-Level (LL) support and control for the BMP280 on STM32 Nucleo F0 boards.
 
