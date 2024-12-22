@@ -16,7 +16,7 @@ This is a dual-mode driver for the BMP280 sensor, supporting both I2C and SPI co
 4. **Important**: To ensure proper initialization settings take effect, follow these steps:
    - First, initialize the BMP280 in **I2C mode** using the i2c driver. This configures the initialization settings of the sensor.
    - Once I2C mode is initialized and the configuration is complete, switch to **SPI mode** for normal operation  (will be fixed later).
-5. For the initialization sequence and example code, refer to `example file`.
+5. For the initialization sequence and example code, refer to initialization.
 
 ## Connection Table
 
@@ -47,3 +47,92 @@ This is a dual-mode driver for the BMP280 sensor, supporting both I2C and SPI co
 
 ## License
 This project is licensed under the MIT License.
+
+## Initialization 
+
+```c
+Example sequence for i2c init
+/*
+
+#include <stdint.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <inttypes.h>
+#include "stm32f030x8.h"
+#include "bmp280_i2c.h"
+#include "usart.h"
+
+int main() {
+
+	usart_gpio_init();
+	usart_init();
+	bmp_rcc_config();
+	bmp_gpio_config();
+	bmp_i2c_config();
+
+	while (1) {
+
+//init config settings
+	bmp_i2c_write(0xF5, 0x00);
+	bmp_i2c_write(0xF4, 0xFF);
+
+
+		double temp = 0;
+		double press = 0;
+
+		temp = temperature(0);
+		press = pressure();
+
+		printf("temp %f\n", temp);
+		printf("press %f\n", press);
+
+		delay_1s_spi();
+
+	}
+
+}
+*/
+
+
+
+//Example sequence for spi init
+/*
+#include <stdint.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <inttypes.h>
+#include "stm32f030x8.h"
+#include "bmp280_spi.h"
+#include "usart.h"
+
+int main() {
+
+	usart_gpio_init();
+	usart_init();
+	bmp_spi_rcc_config();
+	bmp_spi_gpio_config();
+	bmp_spi_config();
+
+	while (1) {
+
+		//bmp_spi_write(0b01110101,0x00);
+		//bmp_spi_write(0b01110100,0xFF);
+
+
+		double temp = 0;
+		double press = 0;
+
+		temp = spi_temperature(0);
+		press = spi_pressure();
+
+		printf("temp %f\n", temp);
+		printf("press %f\n", press);
+
+		delay_1s_spi();
+
+	}
+
+}
+*/
+
+```
