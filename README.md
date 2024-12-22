@@ -43,7 +43,7 @@ This is a dual-mode driver for the BMP280 sensor, supporting both I2C and SPI co
 
 ## Dependencies
 - STM32CubeIDE or any other compatible IDE for STM32 development
-- ARM-CMSIS library
+- ARM-CMSIS Headers
 
 ## License
 This project is licensed under the MIT License.
