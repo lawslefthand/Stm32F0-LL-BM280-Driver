@@ -14,8 +14,8 @@ This is a dual-mode driver for the BMP280 sensor, supporting both I2C and SPI co
 2. Add the driver files to the `src` folder of your STM32CubeIDE project.
 3. Initialize the driver in your main application code and configure the sensor according to your desired mode (I2C or SPI).
 4. **Important**: To ensure proper initialization settings take effect, follow these steps:
-   - First, initialize the BMP280 in **I2C mode** using the i2c driver. This configures the initialization settings of the sensor.
-   - Once I2C mode is initialized and the configuration is complete, switch to **SPI mode** for normal operation  (will be fixed later).
+   - First, initialize the BMP280 in **I2C mode** by uploading the i2c driver. This configures the initialization settings of the sensor.
+   - Once I2C mode is initialized and the configuration is complete, switch to **SPI mode** and upload the spi driver for normal operation  (will be fixed later).
 5. For the initialization sequence and example code, refer to initialization.
 
 ## Connection Table
