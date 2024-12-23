@@ -64,16 +64,12 @@ This project is licensed under the MIT License.
 
 int main() {
 
-	usart_gpio_init();
-	usart_init();
-	bmp_rcc_config();
-	bmp_gpio_config();
-	bmp_i2c_config();
+	bmp_i2c_setup() ;
 
 	while (1) {
 
 //init config settings
-	bmp_i2c_write(0xF5, CONFIG_SETTING);
+	bmp_i2c_write(0xF5, CONFIG_SETTING); //Recommended to apply init every loop if power loss is to be expected.
 	bmp_i2c_write(0xF4, CTRL_MEAS_SETTING);
 
 
@@ -115,8 +111,7 @@ int main() {
 
 	while (1) {
 
-		//bmp_spi_write(0b01110101,0x00);
-		//bmp_spi_write(0b01110100,0xFF);
+	
 
 
 		double temp = 0;
