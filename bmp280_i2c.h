@@ -8,6 +8,9 @@
 #ifndef SRC_BMP280_I2C_H_
 #define SRC_BMP280_I2C_H_
 
+#define CTRL_MEAS_SETTING 0x00
+#define CONFIG_SETTING   0xFF
+
 void bmp_rcc_config(void);
 void bmp_gpio_config(void);
 void bmp_i2c_config(void);
