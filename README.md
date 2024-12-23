@@ -51,7 +51,7 @@ This project is licensed under the MIT License.
 ## Initialization 
 
 ```c
-Example sequence for i2c init
+//Example sequence for i2c init
 /*
 
 #include <stdint.h>
