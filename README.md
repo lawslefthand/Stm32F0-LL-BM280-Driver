@@ -17,7 +17,7 @@ This is a dual-mode driver for the BMP280 sensor, supporting both I2C and SPI co
    - First, initialize the BMP280 in **I2C mode** by uploading the i2c driver. This configures the initialization settings of the sensor.
    - Once I2C mode is initialized and the configuration is complete, switch to **SPI mode** and upload the spi driver for normal operation  (will be fixed later).
 5. For the initialization sequence and example code, refer to initialization.
-6. Change oversampling and other config settings for the bmp280 in the i2c.h file to your liking.
+6. Change oversampling and other config settings for the bmp280 in the i2c.h file to your liking. See datasheet for reference.
 
 ## Connection Table
 
@@ -132,3 +132,6 @@ int main() {
 */
 
 ```
+## Datasheet for reference
+
+[bst-bmp280-ds001.pdf](https://github.com/user-attachments/files/18225939/bst-bmp280-ds001.pdf)
