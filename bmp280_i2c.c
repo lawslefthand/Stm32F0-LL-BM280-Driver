@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <inttypes.h>
+#include "bmp280_i2c.h"
 #include "stm32f030x8.h"
 
 void delay_1s() {
@@ -432,9 +433,9 @@ void bmp_i2c_setup() {
 	bmp_rcc_config();
 	bmp_gpio_config();
 	bmp_i2c_config();
+         bmp_i2c_write(0xF5, CONFIG_SETTING); //Recommended to apply init every loop if power loss is to be expected.
+	bmp_i2c_write(0xF4, CTRL_MEAS_SETTING);
 
-	bmp_i2c_write(0xF5, 0x00);
-	bmp_i2c_write(0xF4, 0xFF);
 }
 
 double altitude() {
