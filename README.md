@@ -73,8 +73,8 @@ int main() {
 	while (1) {
 
 //init config settings
-	bmp_i2c_write(0xF5, 0x00);
-	bmp_i2c_write(0xF4, 0xFF);
+	bmp_i2c_write(0xF5, CONFIG_SETTING);
+	bmp_i2c_write(0xF4, CTRL_MEAS_SETTING);
 
 
 		double temp = 0;
