@@ -4,6 +4,7 @@
 #include <inttypes.h>
 #include "bmp280_i2c.h"
 #include "stm32f030x8.h"
+#include "usart.h"
 
 void delay_1s() {
 	for (uint32_t i = 0; i < 80000; i++) {
