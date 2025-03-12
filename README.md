@@ -83,7 +83,7 @@ int main() {
 		printf("temp %f\n", temp);
 		printf("press %f\n", press);
 
-		delay_1s_spi();
+		
 
 	}
 
