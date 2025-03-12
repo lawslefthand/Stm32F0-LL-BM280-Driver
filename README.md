@@ -26,8 +26,8 @@ This is a dual-mode driver for the BMP280 sensor, supporting both I2C and SPI co
 |------------|----------------|-----------|
 | VDD        | 3.3V           | Power     |
 | GND        | GND            | Ground    |
-| SCL        | PB6 (I2C1 SCL) | Clock     |
-| SDA        | PB7 (I2C1 SDA) | Data      |
+| SCL        | PB8 (I2C1 SCL) | Clock     |
+| SDA        | PB9 (I2C1 SDA) | Data      |
 
 ### SPI Connection (Nucleo F0 board)
 | BMP280 Pin | STM32 Pin      | Function  |
