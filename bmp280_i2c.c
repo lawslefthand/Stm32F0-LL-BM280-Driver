@@ -97,95 +97,33 @@ void bmp_i2c_config() {
 
 void bmp_i2c_write(uint8_t addr, uint8_t value) {
 
-	I2C1->CR2 |= (1 << 16); //NBYTES
-	I2C1->CR2 &= ~(1 << 17);
-	I2C1->CR2 &= ~(1 << 18);
-	I2C1->CR2 &= ~(1 << 19);
-	I2C1->CR2 &= ~(1 << 20);
-	I2C1->CR2 &= ~(1 << 21);
-	I2C1->CR2 &= ~(1 << 22);
-	I2C1->CR2 &= ~(1 << 23);
+    while (I2C1->ISR & I2C_ISR_BUSY);
 
-	I2C1->CR2 &= ~(1 << 25); //autoend sw RESTART mode
 
-	I2C1->CR2 &= ~(1 << 11); //7 bit addr mode
+    I2C1->CR2 = (2 << 16) | (0x76 << 1) | (0 << 10); // Write mode
 
-	I2C1->CR2 &= ~(1 << 10); //write transfer
+  
+    I2C1->CR2 |= I2C_CR2_START;
 
-	I2C1->CR2 &= ~(1 << 1);     //0x76 SADDR
-	I2C1->CR2 |= (1 << 2);
-	I2C1->CR2 |= (1 << 3);
-	I2C1->CR2 &= ~(1 << 4);
-	I2C1->CR2 |= (1 << 5);
-	I2C1->CR2 |= (1 << 6);
-	I2C1->CR2 |= (1 << 7);
 
-	//while (I2C1->ISR & (1 << 15)) {
+    while (!(I2C1->ISR & I2C_ISR_TXIS));
 
-	//	printf("busy");
-	//}
 
-	//	printf("not busy\n");
+    I2C1->TXDR = addr;
 
-	I2C1->CR2 |= (1 << 13); //start gen
 
-	//	printf("write start\n");
+    while (!(I2C1->ISR & I2C_ISR_TXIS));
 
-	//	printf("txis waiting\n");
-	while (!(I2C1->ISR & (1 << 1))) {
 
-	}
+    I2C1->TXDR = value;
 
-	//	printf("txis pass\n");
 
-	I2C1->TXDR = addr;
+    while (!(I2C1->ISR & I2C_ISR_TC));
 
-	//	while (!(I2C1->ISR & (1 << 6))) {
-	//	}
 
-	//	printf("tx compelete write end\n");
-
-	/////////////////////////////write 2 start////////////////////////////////////////////////////
-
-	I2C1->CR2 |= (1 << 16);  // NBYTES
-	I2C1->CR2 &= ~(1 << 17);
-	I2C1->CR2 &= ~(1 << 18);
-	I2C1->CR2 &= ~(1 << 19);
-	I2C1->CR2 &= ~(1 << 20);
-	I2C1->CR2 &= ~(1 << 21);
-	I2C1->CR2 &= ~(1 << 22);
-	I2C1->CR2 &= ~(1 << 23);
-
-	I2C1->CR2 &= ~(1 << 25); //autoend STOP mode
-
-	I2C1->CR2 &= ~(1 << 11); //7 bit addr mode
-
-	I2C1->CR2 &= ~(1 << 10); //write transfer
-
-	I2C1->CR2 &= ~(1 << 1);   //0x76 SADDR
-	I2C1->CR2 |= (1 << 2);
-	I2C1->CR2 |= (1 << 3);
-	I2C1->CR2 &= ~(1 << 4);
-	I2C1->CR2 |= (1 << 5);
-	I2C1->CR2 |= (1 << 6);
-	I2C1->CR2 |= (1 << 7);
-
-	I2C1->CR2 |= (1 << 13); //start gen
-
-	//	printf("write start\n");
-
-	//	printf("txis waiting\n");
-	while (!(I2C1->ISR & (1 << 1))) {
-
-	}
-
-	//	printf("txis pass\n");
-
-	I2C1->TXDR = value;
-
-	//		while (!(I2C1->ISR & (1 << 6))) {
-	//		}
+    I2C1->CR2 |= I2C_CR2_STOP;
 }
+
 
 uint8_t bmp_i2c_read(uint8_t tx_addr) {
 
